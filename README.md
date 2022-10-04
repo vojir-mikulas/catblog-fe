@@ -1,46 +1,88 @@
-# Getting Started with Create React App
+# Frontend Developer Exercise
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Introduction
 
-## Available Scripts
+- your task is to implement a simple single-user blogging engine frontend in React or Angular
+- you don't have to complete all subtasks, just do what you have the time and skills for
+- the goal here is not just to see if you can do an app, but how you do it. So please write it as if it were a big production app, that includes code structure, validations, usage of git, documentation, tests, etc.
+- we realize that some subtasks can be very time consuming, if you just don't have the time, you can write short text description of how would you solve the problem
+- on the flip side, you can improve on many things, if you have the time. For example, we don't need you to implement user registration, but you are free to do so
+- feel free to use this exercise (including the instruction) for evaluation by other companies
 
-In the project directory, you can run:
+## Technologies
 
-### `npm start`
+### Common
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- TypeScript is preferred
+- Jest is preferred for unit tests, TestCafe or Cypress for e2e tests
+- Sass for styling
+- don't worry too much about styling, you can use bootstrap, material or some other library
+- Webpack for bundling
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### React
 
-### `npm test`
+- React Router for routing
+- Redux, hooks or Apollo Link for state management
+- Axios for HTTP requests
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Angular
 
-### `npm run build`
+- NgRx for state management
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## The Exercise
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- check out the API [here](api.yml)
+- check out the WS API [here](ws.json)
+- implement the [wireframes](https://www.figma.com/file/VagZOrr3TjTAxGCpCUTSrO/Applifting-|-Full-Stack-Cvičení "[clickable](https://www.figma.com/proto/VagZOrr3TjTAxGCpCUTSrO/Applifting-%7C-Full-Stack-Cvi%C4%8Den%C3%AD?node-id=2%3A3&viewport=148%2C245%2C0.12103988230228424&scaling=min-zoom")
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### User Perspective
 
-### `npm run eject`
+- Article List [Article List Wireframe](https://www.figma.com/file/VagZOrr3TjTAxGCpCUTSrO/Applifting-Full-Stack-Cvi%C4%8Den%C3%AD?node-id=2%3A3)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+    - display a list of all articles, ordered by date descending
+    - each article should show title, perex and publication date
+    - each article should have a link to the full text
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Article View [Article View Wireframe](https://www.figma.com/file/VagZOrr3TjTAxGCpCUTSrO/Applifting-Full-Stack-Cvi%C4%8Den%C3%AD?node-id=2%3A75)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+    - display an article
+    - article should be in markdown, take care of proper rendering
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- New Article View [New Article View Wireframe](https://www.figma.com/file/VagZOrr3TjTAxGCpCUTSrO/Applifting-Full-Stack-Cvi%C4%8Den%C3%AD?node-id=14%3A2255)
 
-## Learn More
+    - display a page with form to add new article
+    - the form should take title, perex and content
+    - the content should be in markdown, you can use some existing markdown editor
+    - add necessary validations
+    - this page should be protected by password
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Add Comment functionality
+- display comments on Article View page
+- each comment should have content, timestamp and author
+- add comment form to Article View page
+- comment form should take author and content
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Add Comment voting functionality
+    - add the ability to vote on comments (+/-)
+    - display score on each comment
+
+### Admin Perspective
+
+- Login Screen [Login Screen Wireframe](https://www.figma.com/proto/VagZOrr3TjTAxGCpCUTSrO/Applifting-%7C-Full-Stack-Cvi%C4%8Den%C3%AD?node-id=14%3A2693&scaling=min-zoom)
+
+    - implement login
+    - after successful login redirect to next screen
+    - on unsuccesful login display error message
+
+- My Article List [My Article List Wireframe](https://www.figma.com/proto/VagZOrr3TjTAxGCpCUTSrO/Applifting-%7C-Full-Stack-Cvi%C4%8Den%C3%AD?node-id=9%3A0&scaling=min-zoom)
+
+    - display table of all articles
+    - display a button to create new article
+    - implement edit and delete buttons
+    - optionally implement article ordering
+
+- Article Detail View [Article Detail Wireframe](https://www.figma.com/proto/VagZOrr3TjTAxGCpCUTSrO/Applifting-%7C-Full-Stack-Cvi%C4%8Den%C3%AD?node-id=14%3A2622&scaling=min-zoom)
+
+    - display editable sections of article
+    - implement publish button
+    - use some existing Markdown editor, unless you really want to implement your own
