@@ -4,6 +4,7 @@ import {userState} from "../redux/store";
 import {Link} from "react-router-dom";
 import {logoutUser} from "../redux/user-slice";
 import Cookies from "universal-cookie";
+import {useLogoutUser} from "../hooks/service/authService";
 
 
 interface props {
@@ -20,12 +21,7 @@ const UserPanel: React.FC<props> = ({config}) => {
     const handleOpenLogin = () => {
         config.setLoginOpen(!config.loginOpen)
     }
-    const handleLogout = () =>{
-        const cookie = new Cookies;
-        cookie.remove('access_token');
-        cookie.remove('refresh_token');
-        dispatch(logoutUser({}))
-    }
+    const handleLogout = useLogoutUser();
     if (!user) return (
         <div>
             <span onClick={handleOpenLogin}>Login {"->"}</span>

@@ -16,8 +16,8 @@ const Header = () => {
                     <div>
                         <img src={logo} alt="logo"/>
                         <nav>
-                            <Link to={'/Home'}>Recent articles</Link>
-                            <Link to={'/'}>About</Link>
+                            <Link to={'/home'}>Recent articles</Link>
+                            <Link to={'/profile'}>About</Link>
                         </nav>
                     </div>
 

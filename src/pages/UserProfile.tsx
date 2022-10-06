@@ -5,19 +5,20 @@ import useAxios from "../hooks/useAxios";
 
 const UserProfile = () => {
     const {user} = useSelector(userState)
-    const userResponse = useAxios({
+    const { response : userResponse,error,loading} = useAxios({
         method: 'get',
         url: '/users/me',
 
     });
 
     //todo: try to fetch user data
+    if(loading) return <div></div>
     return (
         <div>
 
             <h2>Moje jméno je : {
                 /*@ts-ignore */
-                userResponse.response && userResponse.response.name
+                userResponse && userResponse.name
             }</h2>
         </div>
     );

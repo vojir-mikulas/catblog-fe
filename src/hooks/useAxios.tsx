@@ -2,6 +2,8 @@ import axios, {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} fro
 import React, {useEffect, useState} from 'react';
 import Cookies from "universal-cookie";
 import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {logoutUser} from "../redux/user-slice";
 
 const axiosInstance: AxiosInstance = axios.create({
     baseURL: process.env.REACT_APP_BASEURL,
@@ -31,9 +33,9 @@ axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
 
 axiosInstance.interceptors.response.use((response: AxiosResponse) => response, async (err) => {
     const originalConfig = err.config;
-
+    const status = err.response ? err.response.status : null
     if (err.response) {
-        if (err.response.status === 401) {
+        if (status === 401) {
             try {
                 const refresh_token = cookie.get('refresh_token')
                 const rs = await axiosRefreshTokenInstance.request({
@@ -44,11 +46,14 @@ axiosInstance.interceptors.response.use((response: AxiosResponse) => response, a
                     },
 
                 })
+
                 const {access_token} = rs.data;
-                cookie.set('access_token', access_token)
 
+                cookie.set('access_token', access_token);
 
-                return axiosInstance(originalConfig)
+                originalConfig.headers['Authorization'] = `Bearer ${access_token}`;
+                console.log(originalConfig)
+                return axiosInstance.request(originalConfig)
             } catch (error) {
                 return Promise.reject(error)
             }
@@ -57,40 +62,40 @@ axiosInstance.interceptors.response.use((response: AxiosResponse) => response, a
 })
 
 
-interface TokensDto {
-    access_token: string;
-    refresh_token: string;
-}
-
-export const Axios = async (params: AxiosRequestConfig) => {
-    let response: AxiosResponse<TokensDto> | undefined;
-    let error;
+export const Axios = async (params: AxiosRequestConfig, cb?: (value: void) => void) => {
+    let response: AxiosResponse | undefined;
+    let error: AxiosError | undefined;
 
     await axiosInstance.request(params)
         .then((res: AxiosResponse) => {
             response = res
-        }) // @ts-ignore
+        })
         .catch((err) => {
             error = err;
-        })
+        }).then(cb)
 
     return {response, error}
 }
 
 const UseAxios = (params: AxiosRequestConfig) => {
-    const [response, setResponse] = useState(null)
+    const [response, setResponse] = useState<AxiosResponse | null>(null)
     const [error, setError] = useState<AxiosError | null>(null)
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState<boolean>(true)
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const fetch = () => {
-        // @ts-ignore
+
         axiosInstance.request(params)
             .then((res: AxiosResponse) => {
                 setResponse(res.data)
-            }) // @ts-ignore
+            })
             .catch((err) => {
                 setError(err);
+                if (err.response && err.response.status === 401) {
+                    dispatch(logoutUser({}));
+                    return navigate('/');
+                }
             })
             .finally(() => {
                 setLoading(false);
@@ -101,7 +106,7 @@ const UseAxios = (params: AxiosRequestConfig) => {
         fetch();
     }, []);
     //@ts-ignore
-    if(error && error.response.status === 401) navigate('/')
+
     return {response, error, loading};
 };
 

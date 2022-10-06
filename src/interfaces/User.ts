@@ -7,3 +7,8 @@ export interface User{
     password?: string;
     avatar?: string;
 }
+
+export interface UserLogin{
+    email: string;
+    password: string;
+}

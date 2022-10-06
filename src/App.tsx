@@ -1,9 +1,13 @@
-import React, {createContext, useContext, useState} from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
 import Header from "./components/Header";
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 import Home from "./pages/Home";
 
 import UserProfile from "./pages/UserProfile";
+import useAxios, {Axios} from "./hooks/useAxios";
+import {useDispatch} from "react-redux";
+import {loginUser, logoutUser} from "./redux/user-slice";
+import {useGetUser} from "./hooks/service/authService";
 
 
 export interface User {
@@ -13,8 +17,7 @@ export interface User {
 }
 
 function App() {
-
-
+    const user = useGetUser();
     return (
         <Router>
             <Header/>
@@ -25,7 +28,6 @@ function App() {
         </Router>
     );
 }
-
 
 
 export default App;

@@ -1,57 +1,64 @@
 import React, {useState} from 'react';
-import {useDispatch} from "react-redux";
-import {loginUser} from "../redux/user-slice";
-import useAxios, {Axios} from "../hooks/useAxios";
-import axios, {AxiosResponse} from "axios";
-import {User} from "../interfaces/User";
-import Cookies from "universal-cookie";
+import {useLoginUser} from "../hooks/service/authService";
+import InputText from "./forms/InputText";
+import {UserLogin} from "../interfaces/User";
 
-axios.defaults.baseURL = process.env.REACT_APP_BASEURL
-
-interface Tokens{
-    access_token: string;
-    refresh_token: string;
+interface pageProps {
+    handleModalChange: any;
 }
 
 const LoginModal: React.FC = () => {
     const [registerModal, setRegisterModal] = useState<boolean>(false)
-    const dispatch = useDispatch();
-
-    const [tokens,setTokens] = useState();
 
     const handleModalChange = () => {
         setRegisterModal(!registerModal)
     }
-    const handleLogin = async () => {
-        const mockUser: User = {
-            id: 1,
-            name: "Mikes",
-            surname: "Vojir",
-            email: "vojir@gmail.com",
-            password: "123"
+
+
+    if (registerModal) return <RegisterPage handleModalChange={handleModalChange}/>
+    return <LoginPage handleModalChange={handleModalChange}/>
+};
+
+const LoginPage: React.FC<pageProps> = ({handleModalChange}) => {
+    const [email, setEmail] = useState<string>('')
+    const [emailError, setEmailError] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
+    const [passwordError, setPasswordError] = useState<string>('')
+
+    const userLogin: UserLogin = {
+            email,
+            password
         }
+    const handleLogin = useLoginUser(userLogin);
+    return (
+        <div>
+            <h2>Log In</h2>
+            <InputText config={{
+                name: 'email',
+                placeholder: 'name@example.com',
+                setValue: setEmail,
+                value: email,
+                setError: setEmailError,
+                error: emailError
+            }}/>
+            <InputText config={{
+                name: 'password',
+                placeholder: '******',
+                setValue: setPassword,
+                value: password,
+                setError: setPasswordError,
+                error: passwordError
+            }}/>
+            <span onClick={handleModalChange}>Don't have an account yet?</span>
 
 
-        const {response,error} = await Axios({
-            method: 'post',
-            url: '/auth/login',
-            data:{
-                ...mockUser
-            }
-        })
+            <button onClick={handleLogin}>Log In</button>
+        </div>
+    );
+}
 
-
-       if(response){
-           const cookie = new Cookies()
-           cookie.set('access_token', response.data.access_token)
-           cookie.set('refresh_token', response.data.refresh_token)
-       }
-        dispatch(loginUser({
-            ...mockUser
-        }))
-    }
-    console.log(tokens)
-    if (registerModal) return (
+const RegisterPage: React.FC<pageProps> = ({handleModalChange}) => {
+    return (
         <div>
             <h2>Register</h2>
             <label htmlFor="">
@@ -78,24 +85,6 @@ const LoginModal: React.FC = () => {
             <button>Register</button>
         </div>
     )
-    return (
-        <div>
-            <h2>Log In</h2>
-            <label htmlFor="">
-                Email
-                <input type="text" placeholder={"me@example.com"}/>
-            </label>
-            <label htmlFor="">
-                Password
-                <input type="text" placeholder={"******"}/>
-            </label>
-            <span onClick={handleModalChange}>Don't have an account yet?</span>
-
-
-
-            <button onClick={handleLogin}>Log In</button>
-        </div>
-    );
-};
+}
 
 export default LoginModal;
