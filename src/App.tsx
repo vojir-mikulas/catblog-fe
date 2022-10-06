@@ -1,14 +1,31 @@
-import React from 'react';
+import React, {createContext, useContext, useState} from 'react';
+import Header from "./components/Header";
+import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
+import Home from "./pages/Home";
 
+import UserProfile from "./pages/UserProfile";
+
+
+export interface User {
+    name: string;
+    surname: string;
+    email: string;
+}
 
 function App() {
-  return (
-    <div className="md:container lg:mx-auto bg-amber-500">
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
-    </div>
-  );
+
+
+    return (
+        <Router>
+            <Header/>
+            <Routes>
+                <Route path={'/Home'} element={<Home/>}/>
+                <Route path={'/profile'} element={<UserProfile/>}/>
+            </Routes>
+        </Router>
+    );
 }
+
+
 
 export default App;
