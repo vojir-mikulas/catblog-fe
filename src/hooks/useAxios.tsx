@@ -52,8 +52,8 @@ axiosInstance.interceptors.response.use((response: AxiosResponse) => response, a
                 cookie.set('access_token', access_token);
 
                 originalConfig.headers['Authorization'] = `Bearer ${access_token}`;
-                console.log(originalConfig)
-                return axiosInstance.request(originalConfig)
+
+                return await axiosInstance.request(originalConfig)
             } catch (error) {
                 return Promise.reject(error)
             }
@@ -68,10 +68,13 @@ export const Axios = async (params: AxiosRequestConfig, cb?: (value: void) => vo
 
     await axiosInstance.request(params)
         .then((res: AxiosResponse) => {
+            //TODO: why is this undefined?
             response = res
+
         })
         .catch((err) => {
             error = err;
+
         }).then(cb)
 
     return {response, error}
@@ -88,10 +91,12 @@ const UseAxios = (params: AxiosRequestConfig) => {
 
         axiosInstance.request(params)
             .then((res: AxiosResponse) => {
-                setResponse(res.data)
+                setResponse(res)
+
             })
             .catch((err) => {
                 setError(err);
+
                 if (err.response && err.response.status === 401) {
                     dispatch(logoutUser({}));
                     return navigate('/');

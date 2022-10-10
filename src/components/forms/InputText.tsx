@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import {InputError} from "../../interfaces/InputError";
 
 interface props {
     config:{
@@ -9,7 +10,9 @@ interface props {
         setValue: any;
         value:string;
         setError: any;
-        error: string;
+        error: InputError | null;
+        errorMessage?: string;
+        type?: string;
     }
 }
 
@@ -19,18 +22,20 @@ const InputText : React.FC<props> = ({config}) => {
         if(!config.regex) return ;
 
         if (config.regex && !config.regex.test(config.value)) {
-            config.setError(true);
+            config.setError({
+                ErrorMessage: `${config.errorMessage}`
+            });
         } else if(config.regex ){
-            config.setError(false);
+            config.setError(null);
         }
     },[config.value]);
     return (
         <label htmlFor={config.name}>
             {config.name}
-            <input type="text" name={config.name}  id={config.name}  placeholder={config.placeholder} onInput={(e)=>{
+            <input type={config.type ? config.type : 'text'} name={config.name} value={config.value}  id={config.name}  placeholder={config.placeholder} onInput={(e)=>{
                 config.setValue(e.currentTarget.value)
             }} />
-            {config.error !== '' && config.error}
+            {config.error && <span className='text-red-600'>Error</span>}
         </label>
     );
 };

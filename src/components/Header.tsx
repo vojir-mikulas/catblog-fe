@@ -8,7 +8,9 @@ import LoginModal from "./LoginModal";
 
 const Header = () => {
     const [loginOpen, setLoginOpen] = useState<boolean>(false)
-
+    const handleOpenLogin = () => {
+        setLoginOpen(!loginOpen)
+    }
     return (
         <>
             <header>
@@ -16,18 +18,19 @@ const Header = () => {
                     <div>
                         <img src={logo} alt="logo"/>
                         <nav>
-                            <Link to={'/home'}>Recent articles</Link>
-                            <Link to={'/profile'}>About</Link>
+                            <Link to={'/'}>Recent articles</Link>
+                            <Link to={'/user/profile'}>About</Link>
                         </nav>
                     </div>
 
                     <UserPanel config={{
-                        setLoginOpen,
-                        loginOpen
+                        handleOpenLogin
                     }}/>
                 </div>
             </header>
-            {loginOpen && <LoginModal/>}
+            {loginOpen && <LoginModal config={{
+                handleOpenLogin
+            }}/>}
         </>
     );
 };

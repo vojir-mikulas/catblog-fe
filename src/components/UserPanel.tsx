@@ -9,8 +9,7 @@ import {useLogoutUser} from "../hooks/service/authService";
 
 interface props {
     config: {
-        setLoginOpen: any,
-        loginOpen: boolean
+        handleOpenLogin: () => void
     }
 }
 
@@ -18,20 +17,18 @@ const UserPanel: React.FC<props> = ({config}) => {
     const {user} = useSelector(userState)
     const dispatch = useDispatch();
 
-    const handleOpenLogin = () => {
-        config.setLoginOpen(!config.loginOpen)
-    }
+
     const handleLogout = useLogoutUser();
     if (!user) return (
         <div>
-            <span onClick={handleOpenLogin}>Login {"->"}</span>
+            <span onClick={config.handleOpenLogin}>Login {"->"}</span>
         </div>
     )
 
     return (
         <div>
-            <Link to={'/'}>My Articles</Link>
-            <Link to={'/'}>Create Article</Link>
+            <Link to={'/user/posts'}>My Articles</Link>
+            <Link to={'/user/posts/create'}>Create Article</Link>
             <span onClick={handleLogout}>Logout</span>
         </div>
     );

@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {User, UserLogin} from "../../interfaces/User";
 import Cookies from "universal-cookie";
 import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 
 
 export const useGetUser = () => {
@@ -46,19 +47,19 @@ export const useLogoutUser = (): () => void => {
     }
 }
 
-export const useLoginUser = (login: UserLogin) => {
-
+export const useLoginUser = (login: UserLogin,closeLoginModal?: () => void) => {
     const dispatch = useDispatch()
     const cookie = new Cookies()
     return async () => {
-        const {response: tokens} = await Axios({
+        const {response: tokens,error} = await Axios({
             method: 'post',
             url: '/auth/login',
             data: {
                 ...login
             }
         })
-        if (!tokens) return
+
+        if (!tokens) return toast.error('Login credentials invalid! 😥')
 
         cookie.set('access_token', tokens.data.access_token)
         cookie.set('refresh_token', tokens.data.refresh_token)
@@ -74,5 +75,25 @@ export const useLoginUser = (login: UserLogin) => {
         dispatch(loginUser({
             ...user?.data
         }))
+        if (closeLoginModal) closeLoginModal();
+        return toast.success('You are logged in! 😎')
+    }
+}
+
+export const useRegisterUser = (user: User,setRegisterPage : ()=>void) =>{
+    return async () =>{
+        const {response: userData,error} = await Axios({
+            method: 'post',
+            url: '/auth/register',
+            data: {
+                ...user
+            }
+        })
+
+        if(error) return toast.error('Something went wrong! 😥')
+
+
+        setRegisterPage();
+        toast.success('Successfully registered! 😉')
     }
 }
