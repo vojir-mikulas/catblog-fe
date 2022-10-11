@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import useProtectedRoute from "../hooks/useProtectedRoute";
-import useAxios, {Axios} from "../hooks/useAxios";
-import Post from "../interfaces/Post";
+import useProtectedRoute from "../../hooks/useProtectedRoute";
+import useAxios, {Axios} from "../../hooks/useAxios";
+import Post from "../../interfaces/Post";
 import {useNavigate} from "react-router-dom";
-import useTableSort, {UseTableSortByAuthor, UseTableSortByComments} from "../hooks/useTableSort";
+import useTableSort, {UseTableSortByAuthor, UseTableSortByComments} from "../../hooks/useTableSort";
+import stripHtml from "../../helpers/stripHtmlMarkdown";
+import {toast} from "react-toastify";
 
 const UserPosts = () => {
     useProtectedRoute();
@@ -19,8 +21,7 @@ const UserPosts = () => {
     },[response])
 
     const handlePostDelete = async (id:string)=>{
-
-        const {response} = await Axios({
+        const {response,error} = await Axios({
             method:'DELETE',
             url:`/posts/${id}`
         },()=>{
@@ -29,6 +30,8 @@ const UserPosts = () => {
             arr.splice(postIndex, 1);
             setPosts([...arr]);
         })
+        if(error) return;
+        toast.success('Post was sucessfully deleted. 😮‍💨')
     }
 
     const handleTitleSort = useTableSort(posts,setPosts,'title')
@@ -59,7 +62,7 @@ const UserPosts = () => {
                     return (
                         <tr key={post.id}>
                             <td>{post.title}</td>
-                            <td>{post.content.substring(0,80)}</td>
+                            <td>{stripHtml(post.content.substring(0,80))}...</td>
                             <td>{`${post.author?.name} ${post.author?.surname}`}</td>
                             <td>{post.comments?.length}</td>
                             <td><span onClick={()=>(handlePostEdit(`${post.id}`))}>Edit</span> <span onClick={()=>(handlePostDelete(`${post.id}`))}>Delete</span></td>

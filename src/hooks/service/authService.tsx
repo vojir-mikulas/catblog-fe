@@ -47,9 +47,10 @@ export const useLogoutUser = (): () => void => {
     }
 }
 
-export const useLoginUser = (login: UserLogin,closeLoginModal?: () => void) => {
-    const dispatch = useDispatch()
-    const cookie = new Cookies()
+export const useLoginUser = (login: UserLogin) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const cookie = new Cookies();
     return async () => {
         const {response: tokens,error} = await Axios({
             method: 'post',
@@ -61,8 +62,12 @@ export const useLoginUser = (login: UserLogin,closeLoginModal?: () => void) => {
 
         if (!tokens) return toast.error('Login credentials invalid! 😥')
 
-        cookie.set('access_token', tokens.data.access_token)
-        cookie.set('refresh_token', tokens.data.refresh_token)
+        if(cookie.get('access_token') && cookie.get('refresh_token')) {
+            cookie.remove('access_token')
+            cookie.remove('refresh_token')
+        }
+        cookie.set('access_token', tokens.data.access_token,{path:'/'})
+        cookie.set('refresh_token', tokens.data.refresh_token,{path:'/'})
 
 
         const {response: user} = await Axios({
@@ -75,12 +80,13 @@ export const useLoginUser = (login: UserLogin,closeLoginModal?: () => void) => {
         dispatch(loginUser({
             ...user?.data
         }))
-        if (closeLoginModal) closeLoginModal();
+        navigate('/')
         return toast.success('You are logged in! 😎')
     }
 }
 
-export const useRegisterUser = (user: User,setRegisterPage : ()=>void) =>{
+export const useRegisterUser = (user: User) =>{
+    const navigate = useNavigate();
     return async () =>{
         const {response: userData,error} = await Axios({
             method: 'post',
@@ -89,11 +95,10 @@ export const useRegisterUser = (user: User,setRegisterPage : ()=>void) =>{
                 ...user
             }
         })
+        if(error) return;
 
-        if(error) return toast.error('Something went wrong! 😥')
+        navigate('/auth/login')
 
-
-        setRegisterPage();
         toast.success('Successfully registered! 😉')
     }
 }

@@ -1,12 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import InputText from "../components/forms/InputText";
-import {InputError} from "../interfaces/InputError";
-import {Axios} from "../hooks/useAxios";
-import {useSelector} from "react-redux";
-import {userState} from "../redux/store";
+import React, {useEffect, useRef, useState} from 'react';
+import InputText from "../../components/forms/InputText";
+import {InputError} from "../../interfaces/InputError";
+import {Axios} from "../../hooks/useAxios";
 import {useNavigate} from "react-router-dom";
-import useProtectedRoute from "../hooks/useProtectedRoute";
+import useProtectedRoute from "../../hooks/useProtectedRoute";
 import {toast} from "react-toastify";
+import PostEditor from "../../components/PostEditor";
+import {errorCheck} from "../../helpers/ErrorCheck";
+
 
 
 const PostCreate = () => {
@@ -15,7 +16,8 @@ const PostCreate = () => {
 
     const [title, setTitle] = useState<string>('');
     const [content, setContent] = useState<string>('');
-    const [isPublished, setIsPublished] = useState<boolean>()
+    const [isPublished, setIsPublished] = useState<boolean>(false)
+    const isPublishedInput = useRef<HTMLInputElement>(null);
 
     const [filePreview,setFilePreview] = useState<any>();
     const [selectedFile,setSelectedFile] = useState<any>();
@@ -23,13 +25,22 @@ const PostCreate = () => {
     const [titleError, setTitleError] = useState<InputError | null>(null);
     const [contentError, setContentError] = useState<InputError | null>(null);
 
+
+
     const handleCheckboxChange = (e: any)=>{
+        if(!filePreview) {
+            toast.warn('Post must have image before publishing! 😉')
+            e.currentTarget.checked = false;
+            return setIsPublished(false)
+        }
         setIsPublished(e.currentTarget.checked)
+
     }
     const handleSubmit = async (e: any) =>{
         e.preventDefault();
+        if (errorCheck([titleError, contentError])) return;
 
-        const {response} = await Axios({
+        const {response,error} = await Axios({
             method:'post',
             url:'/posts',
             headers: {
@@ -42,6 +53,7 @@ const PostCreate = () => {
                 thumbnail:selectedFile
             }
         },)
+        if(error) return
         toast.success('Post was successfully created. 👍')
         navigate('/user/posts')
     }
@@ -54,7 +66,13 @@ const PostCreate = () => {
         let file = e.currentTarget.files[0]
         setSelectedFile(file)
     }
+    const handleThumbnailDelete = async () =>{
 
+        setFilePreview(undefined);
+        setSelectedFile(undefined);
+        setIsPublished(false);
+        if(isPublishedInput && isPublishedInput.current) isPublishedInput.current.checked = false;
+    }
     useEffect(() => {
         if (!selectedFile) return
 
@@ -62,8 +80,14 @@ const PostCreate = () => {
         setFilePreview(objectUrl)
         return () => URL.revokeObjectURL(objectUrl)
     }, [selectedFile])
+    useEffect(()=>{
+        if(content === '' || !content){
+            setContentError({
+                ErrorMessage: 'Content cannot be null. '
+            })
+        }
+    },[content])
 
- 
     return (
         <div>
             <h1>Create post</h1>
@@ -73,29 +97,24 @@ const PostCreate = () => {
                     placeholder: 'Post title..',
                     setValue: setTitle,
                     value: title,
-
+                    regex: /^(?!\s*$).+/,
                     setError: setTitleError,
                     error: titleError,
-                    errorMessage: 'Title is invalid'
+                    errorMessage: 'Title cannot be null'
                 }}/>
                 <label htmlFor="">
                     <input onChange={handleImageChange} type="file"
                            id="thumbnail" name="thumbnail"
                            accept="image/png, image/jpeg" />
                     <img src={filePreview} alt="thumbnail" style={{width:"100px",height:"100px"}} />
+                    {filePreview && <span onClick={handleThumbnailDelete}>Delete</span>}
                 </label>
-                <label htmlFor="">
-                    Content
-                    <textarea onInput={(e:any)=>{
-                        setContent(e.currentTarget.value)
-                    }} name="" id="">
-
-                    </textarea>
-                </label>
-
+                 <PostEditor config={{
+                     setContent
+                 }}/>
                 <label htmlFor="">
                     Is published
-                    <input type="checkbox" onInput={handleCheckboxChange} name="isPublished" id="isPublished" />
+                    <input ref={isPublishedInput} type="checkbox" onInput={handleCheckboxChange} name="isPublished" id="isPublished" />
                 </label>
                 <button onClick={handleSubmit}>Create</button>
             </form>

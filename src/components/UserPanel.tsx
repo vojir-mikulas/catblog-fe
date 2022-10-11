@@ -1,27 +1,22 @@
-import React, {useContext, useState} from 'react';
+
 import {useDispatch, useSelector} from "react-redux";
 import {userState} from "../redux/store";
-import {Link} from "react-router-dom";
-import {logoutUser} from "../redux/user-slice";
-import Cookies from "universal-cookie";
+import {Link, useNavigate} from "react-router-dom";
 import {useLogoutUser} from "../hooks/service/authService";
+import React from "react";
 
 
-interface props {
-    config: {
-        handleOpenLogin: () => void
-    }
-}
-
-const UserPanel: React.FC<props> = ({config}) => {
+const UserPanel: React.FC = () => {
     const {user} = useSelector(userState)
     const dispatch = useDispatch();
-
-
+    const navigate = useNavigate();
+    const handleNavigateToLogin = ()=>{
+        navigate('/auth/login')
+    }
     const handleLogout = useLogoutUser();
     if (!user) return (
         <div>
-            <span onClick={config.handleOpenLogin}>Login {"->"}</span>
+            <span onClick={handleNavigateToLogin}>Login {"->"}</span>
         </div>
     )
 

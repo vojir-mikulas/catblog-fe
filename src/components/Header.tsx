@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import logo from '../img/logo.png'
 import {Link} from "react-router-dom";
 import UserPanel from "./UserPanel";
-import LoginModal from "./LoginModal";
+
 
 
 
@@ -23,14 +23,10 @@ const Header = () => {
                         </nav>
                     </div>
 
-                    <UserPanel config={{
-                        handleOpenLogin
-                    }}/>
+                    <UserPanel />
                 </div>
             </header>
-            {loginOpen && <LoginModal config={{
-                handleOpenLogin
-            }}/>}
+
         </>
     );
 };

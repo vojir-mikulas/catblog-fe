@@ -4,10 +4,10 @@ import Cookies from "universal-cookie";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {logoutUser} from "../redux/user-slice";
+import {toast} from "react-toastify";
 
 const axiosInstance: AxiosInstance = axios.create({
     baseURL: process.env.REACT_APP_BASEURL,
-    timeout: 6000
 
 })
 const axiosRefreshTokenInstance: AxiosInstance = axios.create({
@@ -17,13 +17,8 @@ const axiosRefreshTokenInstance: AxiosInstance = axios.create({
 const cookie = new Cookies;
 
 axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
-        const access_token = cookie.get('access_token')
-        if (access_token) {
-            //todo: odebrat tuhle nechutnost
-            //@ts-ignore
-            config.headers["Authorization"] = `Bearer ${access_token}`;
-        }
-
+        const access_token = cookie.get('access_token');
+        if (access_token && config.headers) config.headers["Authorization"] = `Bearer ${access_token}`;
         return config;
     },
     (error) => {
@@ -31,10 +26,13 @@ axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
     }
 )
 
-axiosInstance.interceptors.response.use((response: AxiosResponse) => response, async (err) => {
+axiosInstance.interceptors.response.use((res: AxiosResponse) => {
+    return res
+}, async (err) => {
     const originalConfig = err.config;
     const status = err.response ? err.response.status : null
     if (err.response) {
+        toast.error(`${err.response.data.message} 😥`)
         if (status === 401) {
             try {
                 const refresh_token = cookie.get('refresh_token')
@@ -48,8 +46,8 @@ axiosInstance.interceptors.response.use((response: AxiosResponse) => response, a
                 })
 
                 const {access_token} = rs.data;
-
-                cookie.set('access_token', access_token);
+                if (cookie.get('access_token')) cookie.remove('access_token',{path:'/'})
+                cookie.set('access_token', access_token,{path:'/'});
 
                 originalConfig.headers['Authorization'] = `Bearer ${access_token}`;
 
@@ -58,6 +56,7 @@ axiosInstance.interceptors.response.use((response: AxiosResponse) => response, a
                 return Promise.reject(error)
             }
         }
+        return Promise.reject(err)
     }
 })
 
@@ -87,17 +86,14 @@ const UseAxios = (params: AxiosRequestConfig) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const fetch = () => {
-
-        axiosInstance.request(params)
-            .then((res: AxiosResponse) => {
+    const fetch = async () => {
+        await axiosInstance.request(params)
+            .then((res: any) => {
                 setResponse(res)
-
             })
-            .catch((err) => {
-                setError(err);
-
-                if (err.response && err.response.status === 401) {
+            .catch((error) => {
+                setError( error);
+                if (error.response && error.response.status === 401) {
                     dispatch(logoutUser({}));
                     return navigate('/');
                 }
@@ -109,9 +105,8 @@ const UseAxios = (params: AxiosRequestConfig) => {
 
     useEffect(() => {
         fetch();
-    }, []);
-    //@ts-ignore
 
+    }, []);
     return {response, error, loading};
 };
 
