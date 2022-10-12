@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@nestjs/platform-socket.io": "^9.1.4",
+    "@nestjs/websockets": "^9.1.4",
     "@reduxjs/toolkit": "^1.8.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -22,6 +24,7 @@
     "react-router-dom": "^6.4.1",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.0.8",
+    "socket.io-client": "^4.5.2",
     "thunk": "^0.0.1",
     "typescript": "^4.8.4",
     "universal-cookie": "^4.0.4",
