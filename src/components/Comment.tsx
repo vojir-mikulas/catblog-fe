@@ -7,7 +7,12 @@ import {userState} from "../redux/store";
 import Cookies from "universal-cookie";
 import {io, Socket} from "socket.io-client";
 
-const Comment = ({id, content, createdAt, user}: any) => {
+enum Values {
+    UPVOTE = 1,
+    DOWNVOTE = -1
+}
+
+const Comment = ({id, content, createdAt, user, upvotes}: any) => {
     const {getComments, handleSocketComment, postId}: any = useContext(CommentContext)
     const {user: currentUser} = useSelector(userState)
 
@@ -15,41 +20,21 @@ const Comment = ({id, content, createdAt, user}: any) => {
     const [openedReply, setOpenedReply] = useState<boolean>(false);
     const [replyContent, setReplyContent] = useState<string>()
 
-    const [upvotes, setUpvotes] =useState<number>();
-    const [socket,setSocket] = useState<Socket>();
 
     const handleOpenReply = () => {
         setReplyContent('')
         setOpenedReply(!openedReply)
     }
 
-    //Socket init
-    useEffect(() => {
-        const wsUrl: string = process.env.REACT_APP_COMMENT_WS_URL ? process.env.REACT_APP_COMMENT_WS_URL : 'http://localhost:3002';
-        const cookie = new Cookies;
-        const access_token = cookie.get('access_token')
-        const newSocket = io(wsUrl,{
-            extraHeaders: {
-                Authorization: `Bearer ${access_token}`
-            }})
-        setSocket(newSocket)
-    }, [process.env.REACT_APP_COMMENT_WS_URL])
-    //Socket listener
-    const upvoteListener = (upvotes: any) => {
-        console.log(upvotes);
-        setUpvotes(upvotes)
+    const handleUpvote = (value: Values) => {
+        handleSocketComment({
+            method: 'put',
+            id,
+            postId,
+            value
+        })
     }
-    // Send comment handler
-    const handleSocketUpvote = (upvote : any) => {
-        socket?.emit('upvote', upvote)
-    }
-    //Turn on websocket stream
-    useEffect(() => {
-        socket?.on('upvote', upvoteListener)
-        return () => {
-            socket?.off('upvote', upvoteListener)
-        }
-    }, [upvoteListener])
+
     return (
         <>
             <div className='m-2'>
@@ -59,12 +44,19 @@ const Comment = ({id, content, createdAt, user}: any) => {
                     {user.name + user.surname}
 
                     <div>
-                        <span> Upvote ⬆️ {}</span>
-                        <span> Downvote ⬇️ {}</span>
+                        <div>
+                            <span onClick={()=>{
+                                handleUpvote(Values.UPVOTE)
+                            }}> Upvote ⬆️ </span>
+                            <span onClick={()=>{
+                                handleUpvote(Values.DOWNVOTE)
+                            }}> Downvote ⬇️ </span>
+                            <span> {upvotes} </span>
+                        </div>
                         {currentUser && <span className='cursor-pointer' onClick={handleOpenReply}>Reply</span>}
-                        {(currentUser && user.id === currentUser.id) && <span className='text-red-600' onClick={()=>{
+                        {(currentUser && user.id === currentUser.id) && <span className='text-red-600' onClick={() => {
                             handleSocketComment({
-                                method:'delete',
+                                method: 'delete',
                                 id
                             })
                         }}> Delete </span>}
@@ -76,7 +68,7 @@ const Comment = ({id, content, createdAt, user}: any) => {
                     }}/>
                     <button className='__close-button' onClick={() => {
                         handleSocketComment({
-                            method:'post',
+                            method: 'post',
                             content: replyContent,
                             postId,
                             parentId: id
