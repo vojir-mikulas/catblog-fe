@@ -26,7 +26,7 @@ const PostItem : React.FC<props> = ({config}) => {
                 <p> {stripHtml(config.content)}</p>
                 <div>
                     <span>Read whole article</span>
-                    <span>Comments {config.comments && config.comments.length}</span>
+                    <span>Comments {config._count && config._count.comments}</span>
                 </div>
             </article>
         </div>

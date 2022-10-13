@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {useParams} from "react-router-dom";
 import useAxios from "../../hooks/useAxios";
 import {DateTime} from "luxon";
-import CommentList from "../../components/CommentList";
+import CommentList from "../../components/comments/CommentList";
 import {io, Socket} from "socket.io-client";
 import {useSelector} from "react-redux";
 import {userState} from "../../redux/store";

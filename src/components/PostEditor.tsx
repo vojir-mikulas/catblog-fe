@@ -13,7 +13,7 @@ const PostEditor : React.FC<props> = ({config}) => {
         <label htmlFor="">
             Content
             <Editor
-                onEditorChange={(content:string)=>{config.setContent(content)}}
+                onEditorChange={(content:string)=>{config.setContent(content); console.log(content)}}
                 initialValue={config.initialValue}
                 init={{
 

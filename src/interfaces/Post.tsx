@@ -19,5 +19,7 @@ export default interface Post {
     thumbnail?: string;
     createdAt?: string;
     author?: Author,
-    comments?: Array<Comment>
+    _count:{
+        comments: number
+    }
 }

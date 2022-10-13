@@ -64,7 +64,7 @@ const UserPosts = () => {
                             <td>{post.title}</td>
                             <td>{stripHtml(post.content.substring(0,80))}...</td>
                             <td>{`${post.author?.name} ${post.author?.surname}`}</td>
-                            <td>{post.comments?.length}</td>
+                            <td>{post._count?.comments}</td>
                             <td><span onClick={()=>(handlePostEdit(`${post.id}`))}>Edit</span> <span onClick={()=>(handlePostDelete(`${post.id}`))}>Delete</span></td>
                         </tr>
                     )

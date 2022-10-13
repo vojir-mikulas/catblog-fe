@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {CommentContext} from "../pages/Post/PostDetail";
+import {CommentContext} from "../../pages/Post/PostDetail";
 import CommentList from "./CommentList";
 import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {userState} from "../redux/store";
+import {userState} from "../../redux/store";
 import Cookies from "universal-cookie";
 import {io, Socket} from "socket.io-client";
 

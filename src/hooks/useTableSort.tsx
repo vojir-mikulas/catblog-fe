@@ -33,7 +33,7 @@ export const UseTableSortByComments = (array: Array<any>,setArray : any) => {
         setOrder(order === "asc" ? "desc" : "asc");
         let arr: Array<Post> = array;
         // @ts-ignore
-        arr = arr.sort((a: Post,b: Post) => a.comments?.length - b.comments?.length);
+        arr = arr.sort((a: Post,b: Post) => b._count?.comments - a._count?.comments);
         if(order === 'desc') arr = arr.reverse();
         setArray([...arr]);
     }
