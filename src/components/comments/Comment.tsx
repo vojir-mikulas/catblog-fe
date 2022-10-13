@@ -1,11 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {CommentContext} from "../../pages/Post/PostDetail";
 import CommentList from "./CommentList";
-import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {userState} from "../../redux/store";
-import Cookies from "universal-cookie";
-import {io, Socket} from "socket.io-client";
+import {DateTime} from 'luxon';
+import avatar from '../../img/avatar.jpg'
 
 enum Values {
     UPVOTE = 1,
@@ -39,16 +38,24 @@ const Comment = ({id, content, createdAt, user, upvotes}: any) => {
         <>
             <div className='m-2'>
                 <div className='border-2 p-2 '>
-                    {content}
-                    {createdAt}
-                    {user.name + user.surname}
+                    <img
+                        src={user?.avatar ?(process.env.REACT_APP_BASEURL + user.avatar) : avatar}
+                        alt="avatar" className='w-20 h-20 object-cover rounded-full' />
+                    <div>
+                        <div>
+                        {DateTime.fromISO(createdAt).setLocale('en').toRelativeCalendar()}
+                        {user.name + user.surname}
+                    </div>
+                        <p> {content}</p>
+                    </div>
+
 
                     <div>
                         <div>
-                            <span onClick={()=>{
+                            <span onClick={() => {
                                 handleUpvote(Values.UPVOTE)
                             }}> Upvote ⬆️ </span>
-                            <span onClick={()=>{
+                            <span onClick={() => {
                                 handleUpvote(Values.DOWNVOTE)
                             }}> Downvote ⬇️ </span>
                             <span> {upvotes} </span>
