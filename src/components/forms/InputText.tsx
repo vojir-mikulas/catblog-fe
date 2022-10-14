@@ -30,12 +30,12 @@ const InputText : React.FC<props> = ({config}) => {
         }
     },[config.value]);
     return (
-        <label htmlFor={config.name}>
-            {config.name}
-            <input type={config.type ? config.type : 'text'} name={config.name} value={config.value}  id={config.name}  placeholder={config.placeholder} onInput={(e)=>{
+        <label htmlFor={config.name} className={`flex flex-col my-3`}>
+            <span className='font-medium my-1'>{config.name}</span>
+            <input className={`h-9 border rounded px-5 ${config.error && 'border-red-400 text-red-400'}`}  type={config.type ? config.type : 'text'} name={config.name} value={config.value}  id={config.name}  placeholder={config.placeholder} onInput={(e)=>{
                 config.setValue(e.currentTarget.value)
             }} />
-            {config.error && <span className='text-red-600'>Error</span>}
+
         </label>
     );
 };

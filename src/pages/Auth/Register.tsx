@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {errorCheck} from "../../helpers/ErrorCheck";
 import {useSelector} from "react-redux";
 import {userState} from "../../redux/store";
+import Button from "../../components/Button";
 
 const Register = () => {
     const {user} = useSelector(userState)
@@ -48,64 +49,69 @@ const Register = () => {
         }
     }, [password, passwordCheck])
     return (
-        <div>
-            <h2>Register</h2>
-            <InputText config={{
-                name: 'name',
-                placeholder: 'Libor',
-                regex: /^(?!\s*$).+/,
-                setValue: setName,
-                value: name,
-                setError: setNameError,
-                error: nameError,
-                errorMessage: 'Name is invalid'
-            }}/>
-            <InputText config={{
-                name: 'surname',
-                placeholder: 'Fiala',
-                regex: /^(?!\s*$).+/,
-                setValue: setSurname,
-                value: surname,
-                setError: setSurnameError,
-                error: surnameError,
-                errorMessage: 'Surname is invalid'
+        <div className='h-max flex justify-center items-center '>
+            <form className='shadow-xl  w-96 p-7 mt-10 flex flex-col' onSubmit={(e)=>(e.preventDefault())}>
+                <h2 className='text-4xl font-semibold mb-5'>Register</h2>
+                <InputText config={{
+                    name: 'Name',
+                    placeholder: 'Libor',
+                    regex: /^(?!\s*$).+/,
+                    setValue: setName,
+                    value: name,
+                    setError: setNameError,
+                    error: nameError,
+                    errorMessage: 'Name is invalid'
+                }}/>
+                <InputText config={{
+                    name: 'Surname',
+                    placeholder: 'Fiala',
+                    regex: /^(?!\s*$).+/,
+                    setValue: setSurname,
+                    value: surname,
+                    setError: setSurnameError,
+                    error: surnameError,
+                    errorMessage: 'Surname is invalid'
 
-            }}/>
-            <InputText config={{
-                name: 'email',
-                placeholder: 'name@example.com',
-                regex: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
-                setValue: setEmail,
-                value: email,
-                setError: setEmailError,
-                error: emailError,
-                errorMessage: 'Email is invalid'
-            }}/>
-            <InputText config={{
-                name: 'password',
-                placeholder: '******',
-                regex: /^(?!\s*$).+/,
-                setValue: setPassword,
-                value: password,
-                setError: setPasswordError,
-                error: passwordError,
-                errorMessage: 'Password is invalid'
-            }}/>
-            <InputText config={{
-                name: 'password',
-                placeholder: '******',
-                regex: /^(?!\s*$).+/,
-                setValue: setPasswordCheck,
-                value: passwordCheck,
-                setError: setPasswordCheckError,
-                error: passwordCheckError,
-                errorMessage: 'Password is invalid'
-            }}/>
-            <span onClick={handleNavigateToLogin}>Already have an account?</span>
-            <button onClick={async ()=>{
-                if(errorCheck([nameError,surnameError,emailError,passwordError,passwordCheckError,isPasswordEqual])) return
-                await handleRegister()
-            }}>Register</button>
+                }}/>
+                <InputText config={{
+                    name: 'Email',
+                    placeholder: 'name@example.com',
+                    regex: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+                    setValue: setEmail,
+                    value: email,
+                    setError: setEmailError,
+                    error: emailError,
+                    errorMessage: 'Email is invalid'
+                }}/>
+                <InputText config={{
+                    name: 'Password',
+                    placeholder: '******',
+                    regex: /^(?!\s*$).+/,
+                    setValue: setPassword,
+                    value: password,
+                    setError: setPasswordError,
+                    error: passwordError,
+                    errorMessage: 'Password is invalid'
+                }}/>
+                <InputText config={{
+                    name: 'Password again',
+                    placeholder: '******',
+                    regex: /^(?!\s*$).+/,
+                    setValue: setPasswordCheck,
+                    value: passwordCheck,
+                    setError: setPasswordCheckError,
+                    error: passwordCheckError,
+                    errorMessage: 'Password is invalid'
+                }}/>
+                <span onClick={handleNavigateToLogin} className='text-blue-500 cursor-pointer my-3 self-center'>Already have an account?</span>
+                <Button config={{
+                    onClickHandler: async ()=>{
+                        if(errorCheck([nameError,surnameError,emailError,passwordError,passwordCheckError,isPasswordEqual])) return
+                        await handleRegister()
+                    },
+                    title: 'Register'
+                }}></Button>
+            </form>
         </div>
     )
 };

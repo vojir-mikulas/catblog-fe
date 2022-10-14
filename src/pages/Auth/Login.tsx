@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {errorCheck} from "../../helpers/ErrorCheck";
 import {useSelector} from "react-redux";
 import {userState} from "../../redux/store";
+import Button from "../../components/Button";
 
 const Login = () => {
     const navigate = useNavigate()
@@ -32,40 +33,44 @@ const Login = () => {
         if(user) navigate('/');
     },[user])
     return (
-        <div>
-            <h2>Log In</h2>
-            <InputText config={{
-                name: 'email',
-                placeholder: 'name@example.com',
-                regex: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
-                setValue: setEmail,
-                value: email,
-                setError: setEmailError,
-                error: emailError,
-                errorMessage: 'Email is invalid'
-            }}/>
-            <InputText config={{
-                name: 'password',
-                placeholder: '******',
-                regex: /^(?!\s*$).+/,
-                setValue: setPassword,
-                value: password,
-                setError: setPasswordError,
-                error: passwordError,
-                type: 'password',
-                errorMessage: 'Password is invalid'
-            }}/>
-            <span onClick={handleNavigateToRegister}>Don't have an account yet?</span>
+        <div className='h-max flex justify-center items-center '>
+            <form className='shadow-xl  w-96 p-7 mt-10 flex flex-col' onSubmit={(e)=>( e.preventDefault())}>
+                <h2 className='text-4xl font-semibold mb-5'>Log In</h2>
+                <InputText config={{
+                    name: 'Email',
+                    placeholder: 'name@example.com',
+                    regex: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+                    setValue: setEmail,
+                    value: email,
+                    setError: setEmailError,
+                    error: emailError,
+                    errorMessage: 'Email is invalid'
+                }}/>
+                <InputText config={{
+                    name: 'Password',
+                    placeholder: '******',
+                    regex: /^(?!\s*$).+/,
+                    setValue: setPassword,
+                    value: password,
+                    setError: setPasswordError,
+                    error: passwordError,
+                    type: 'password',
+                    errorMessage: 'Password is invalid'
+                }}/>
+                <span onClick={handleNavigateToRegister} className='text-blue-500 cursor-pointer my-3 self-center'>Don't have an account yet?</span>
 
 
-            <button onClick={async () => {
+                <Button config={{
+                    onClickHandler: async () => {
 
-                if (errorCheck([emailError, passwordError])) return
-                await handleLogin()
+                        if (errorCheck([emailError, passwordError])) return
+                        await handleLogin()
 
-            }}>Log In
-            </button>
+                    },
+                    title: 'Log In'
+                }}/>
 
+            </form>
         </div>
     );
 };

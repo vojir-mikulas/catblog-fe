@@ -1,29 +1,24 @@
 import React, {useContext, useState} from 'react';
 import logo from '../img/logo.png'
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import UserPanel from "./UserPanel";
 
 
-
-
 const Header = () => {
-    const [loginOpen, setLoginOpen] = useState<boolean>(false)
-    const handleOpenLogin = () => {
-        setLoginOpen(!loginOpen)
-    }
+    const navigate = useNavigate()
+
     return (
         <>
-            <header>
-                <div>
-                    <div>
-                        <img src={logo} alt="logo"/>
-                        <nav>
-                            <Link to={'/'}>Recent articles</Link>
-                            <Link to={'/user/profile'}>About</Link>
-                        </nav>
-                    </div>
+            <header className='bg-gray-50 fixed w-full'>
+                <div className='lg:container mx-auto h-14  flex justify-between '>
+                    <nav className='flex-auto flex items-center gap-3'>
+                        <img src={logo} alt="logo" className='w-11 h-12 cursor-pointer' onClick={()=>(navigate('/'))}/>
 
-                    <UserPanel />
+                        <Link to={'/'} className='text-gray-500 hover:text-black transition-colors'>Recent articles</Link>
+                        <Link to={'/user/profile'} className='text-gray-500 hover:text-black transition-colors'>About</Link>
+                    </nav>
+
+                    <UserPanel/>
                 </div>
             </header>
 

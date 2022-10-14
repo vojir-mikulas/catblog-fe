@@ -30,31 +30,31 @@ function App() {
                 pauseOnFocusLoss
                 draggable
                 pauseOnHover
+
             />
             <Header/>
-            <Routes>
-                <Route path={'/'} element={<Home/>}/>
-                <Route path={'posts'}>
-                    <Route path={':id'} element={<PostDetail/>}/>
-                </Route>
-                <Route path={'auth'}>
-                    <Route index element={<Auth/>}/>
-                    <Route path={'login'} element={<Login/>}/>
-                    <Route path={'register'} element={<Register/>}/>
-                </Route>
+           <div className='pt-16'>
+               <Routes>
+                   <Route path={'/'} element={<Home/>}/>
+                   <Route path={'posts'}>
+                       <Route path={':id'} element={<PostDetail/>}/>
+                   </Route>
+                   <Route path={'auth'}>
+                       <Route index element={<Auth/>}/>
+                       <Route path={'login'} element={<Login/>}/>
+                       <Route path={'register'} element={<Register/>}/>
+                   </Route>
 
-                <Route path={'user'}>
-                    <Route path={'profile'} element={<UserProfile/>}/>
-                    <Route path={'posts'}>
-                        <Route path={''} element={<UserPosts/>}/>
-                        <Route path={'create'} element={<PostCreate/>}/>
-                        <Route path={':id'} element={<PostEdit/>}/>
-                    </Route>
-                </Route>
-
-
-
-            </Routes>
+                   <Route path={'user'}>
+                       <Route path={'profile'} element={<UserProfile/>}/>
+                       <Route path={'posts'}>
+                           <Route path={''} element={<UserPosts/>}/>
+                           <Route path={'create'} element={<PostCreate/>}/>
+                           <Route path={':id'} element={<PostEdit/>}/>
+                       </Route>
+                   </Route>
+               </Routes>
+           </div>
         </Router>
     );
 }
