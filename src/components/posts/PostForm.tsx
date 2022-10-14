@@ -143,8 +143,8 @@ const PostForm: React.FC<props> = ({config}) => {
 
     return (
         <div className='md:container mx-auto'>
-            <div className='w-4/6'>
-                <div className='flex gap-6 mt-10 mb-5 flex items-center '>
+            <div className='w-4/6 mobile:w-full'>
+                <div className='flex gap-6 mt-10 mb-5 flex items-center mobile:flex-col mobile:items-center '>
                     <h1 className='text-4xl font-medium'>{heading}</h1>
                     <Button config={{
                         onClickHandler: handleSubmit,
@@ -156,7 +156,7 @@ const PostForm: React.FC<props> = ({config}) => {
                         Publish
                     </label>
                 </div>
-                <form method='POST' encType="multipart/form-data" onSubmit={(e) => (e.preventDefault())}>
+                <form method='POST' encType="multipart/form-data" className='mobile:flex mobile:flex-col mobile:items-center mobile:text-center' onSubmit={(e) => (e.preventDefault())}>
                     <div className='w-1/2'>
                         <InputText config={{
                             name: 'Title',

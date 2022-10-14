@@ -5,7 +5,7 @@ const useClickOutside = (handler: () => void) => {
 
     //TODO: add types
     useEffect(() => {
-        let maybeHandler = (e: React.SyntheticEvent) => {
+        let maybeHandler = (e: any) => {
         // @ts-ignore
             if (!domNode.current?.contains(e.target)) {
                 handler();

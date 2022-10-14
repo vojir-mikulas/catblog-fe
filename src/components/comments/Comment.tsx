@@ -38,11 +38,11 @@ const Comment = ({id, content, createdAt, user, upvotes,parentId}: any) => {
     return (
         <>
             <div className='relative'>
-                {parentId && <div className='border-l-2 border-b-2  h-10 w-6 border-gray-300 rounded-bl-xl absolute -left-8 top-1'></div>}
+                {parentId && <div className='mobile:hidden border-l-2 border-b-2  h-10 w-6 border-gray-300 rounded-bl-xl absolute -left-8 top-1'></div>}
                 <div className='my-2 py-2 flex flex-col'>
 
                     <div className='flex w-full'>
-                        <div className='mr-6 rounded-full overflow-hidden w-16 h-16 flex-shrink-0 '>
+                        <div className='mr-6 rounded-full overflow-hidden w-16 h-16 mobile:h-11 mobile:w-11  flex-shrink-0 '>
                             <img
                                 src={user?.avatar ? (process.env.REACT_APP_BASEURL + user.avatar) : avatar}
                                 alt="avatar" className='w-20 h-20 object-cover rounded-full'/>
@@ -84,12 +84,12 @@ const Comment = ({id, content, createdAt, user, upvotes,parentId}: any) => {
 
                 </div>
             </div>
-            <div className='pl-16 flex flex-col relative '>
-                <div className={`border-l-2 border-gray-300  absolute h-[calc(100%_-_4.3rem)] left-8`}></div>
+            <div className='pl-16 flex flex-col relative mobile:pl-3'>
+                <div className={`border-l-2 border-gray-300  absolute h-[calc(100%_-_4.3rem)] left-8 mobile:hidden`}></div>
                 <ReplyCommentList comments={getComments(id)}/>
             </div>
             {openedReply && <div className='flex items-center w-full my-6'>
-                <div className='mr-6 rounded-full overflow-hidden w-16 h-16 flex-shrink-0 '>
+                <div className='mr-6 rounded-full overflow-hidden w-16 h-16 flex-shrink-0 mobile:w-10 mobile:h-10'>
                     <img
                         src={user?.avatar ?(process.env.REACT_APP_BASEURL + user.avatar) : avatar}
                         alt="avatar" className='w-full h-full object-cover ' />

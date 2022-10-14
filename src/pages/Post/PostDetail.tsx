@@ -83,10 +83,10 @@ const PostDetail = () => {
                     animate={{opacity: 1}}
                     exit={{opacity: 0}}>
 
-            <main className='w-4/6  '>
+            <main className='w-4/6 mobile:w-full '>
                 <section>
-                    <article>
-                        <header>
+                    <article >
+                        <header  className={'mobile:p-5'}>
                             <h1 className='font-medium text-4xl my-4'>{post?.data.title}</h1>
                             <div className='text-sm text-gray-500 flex gap-4 my-5  '>
                                 <span>{`${post?.data.author.name} ${post?.data.author.surname}`}</span>
@@ -94,14 +94,14 @@ const PostDetail = () => {
                             </div>
                         </header>
                         <img src={`${process.env.REACT_APP_BASEURL}${post?.data.thumbnail}`} alt="thumbnail"
-                             className='w-full object-cover object-center' style={{height: '500px'}}/>
-                        <p className={'my-5 markdown'} dangerouslySetInnerHTML={{__html: post?.data.content}}></p>
+                             className='w-full object-cover object-center mobile:h-50' style={{height: '500px'}}/>
+                        <p className={'my-5 markdown mobile:p-5'} dangerouslySetInnerHTML={{__html: post?.data.content}}></p>
                     </article>
                 </section>
-                <hr className='my-6'/>
-                <section className='pb-20 '>
+                <hr className='my-6 '/>
+                <section className='pb-20 mobile:px-3'>
                     <h4 className='text-2xl font-medium'>Comments ({comments ? comments.length : 0})</h4>
-                    <article>
+                    <article className=' mobile:text-xs'>
                         {user && <div className='flex items-center w-full my-6'>
 
                             <div className='mr-6 rounded-full overflow-hidden w-16 h-16 flex-shrink-0 '>
@@ -136,7 +136,7 @@ const PostDetail = () => {
                     </article>
                 </section>
             </main>
-            <aside className='w-2/6 '>
+            <aside className='w-2/6 mobile:hidden'>
                 <div className=' sticky top-20 flex flex-col border-l border-gray-300 px-7 mx-7'>
                     <h2 className='text-2xl font-medium my-6'>Related articles</h2>
                     <div className='flex flex-col'>

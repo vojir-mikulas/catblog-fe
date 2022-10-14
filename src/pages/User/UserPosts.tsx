@@ -53,7 +53,7 @@ const UserPosts = () => {
                     animate={{opacity: 1}}
                     exit={{opacity: 0}}
                     className='md:container mx-auto'>
-            <div className='flex gap-6 mt-10 mb-5'>
+            <div className='flex gap-6 mt-10 mb-5 mobile:flex-col mobile:items-center'>
                 <h1 className='text-4xl font-medium'>My articles</h1>
                 <Button config={{
                     title: 'Create new post',
@@ -62,8 +62,8 @@ const UserPosts = () => {
                     }
                 }}/>
             </div>
-            <table className='w-full table-auto'>
-                <thead className='border-b-2 border-gray-300 text-left h-10'>
+            <table className='w-full table-auto mobile:text-xs'>
+                <thead className='border-b-2 border-gray-300 text-left h-10 '>
                 <tr >
                     <th onClick={handleTitleSort} className='cursor-pointer'>Article title <FontAwesomeIcon
                         icon={faSort}/></th>

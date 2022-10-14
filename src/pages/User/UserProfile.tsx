@@ -87,15 +87,15 @@ const UserProfile = () => {
                     exit={{opacity: 0}}
                     className='md:container mx-auto'>
             <section>
-                <div className='flex gap-5 mt-10 mb-16'>
+                <div className='flex gap-5 mt-10 mb-16 mobile:flex-col mobile:items-center'>
                     <h1 className='text-4xl font-medium '>Profile</h1>
                     <Button config={{
                     onClickHandler: handleSubmit,
                     title: 'Save'
                 }}/>
                 </div>
-                <form onSubmit={(e)=>(e.preventDefault())} className='flex gap-10'>
-                    <div className='relative w-60 h-60'>
+                <form onSubmit={(e)=>(e.preventDefault())} className='flex gap-10 mobile:flex-col mobile:items-center'>
+                    <div className='relative w-60 h-60 flex-shrink-0'>
                         <label htmlFor="thumbnail">
                             <input onChange={handleImageChange} type="file"
                                    id="thumbnail" name="thumbnail"
@@ -112,7 +112,7 @@ const UserProfile = () => {
                             </div>
                         }
                     </div>
-                    <div className='flex flex-col gap-3 text-xl border-l border-gray-300 pl-10'>
+                    <div className='flex flex-col gap-3 text-xl border-l mobile:border-l-0 mobile:border-t mobile:pt-3 border-gray-300 pl-10'>
                         <label htmlFor="name">
                             Name:
                             <InputTextEdit config={{
