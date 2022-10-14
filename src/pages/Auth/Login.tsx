@@ -8,6 +8,7 @@ import {errorCheck} from "../../helpers/ErrorCheck";
 import {useSelector} from "react-redux";
 import {userState} from "../../redux/store";
 import Button from "../../components/Button";
+import { motion } from 'framer-motion';
 
 const Login = () => {
     const navigate = useNavigate()
@@ -33,7 +34,10 @@ const Login = () => {
         if(user) navigate('/');
     },[user])
     return (
-        <div className='h-max flex justify-center items-center '>
+        <motion.div className='h-max flex justify-center items-center '
+                    initial={{opacity:0}}
+                    animate={{opacity:1}}
+                    exit={{opacity:0}}>
             <form className='shadow-xl  w-96 p-7 mt-10 flex flex-col' onSubmit={(e)=>( e.preventDefault())}>
                 <h2 className='text-4xl font-semibold mb-5'>Log In</h2>
                 <InputText config={{
@@ -71,7 +75,7 @@ const Login = () => {
                 }}/>
 
             </form>
-        </div>
+        </motion.div>
     );
 };
 

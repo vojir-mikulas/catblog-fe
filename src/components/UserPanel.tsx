@@ -1,12 +1,12 @@
 
-import {useDispatch, useSelector} from "react-redux";
+import { useSelector} from "react-redux";
 import {userState} from "../redux/store";
 import {Link, useNavigate} from "react-router-dom";
 import {useLogoutUser} from "../hooks/service/authService";
 import React, {useState} from "react";
 import avatar from "../img/avatar.jpg";
-import {User} from "../interfaces/User";
-import Button from "./Button";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 
 const UserPanel: React.FC = () => {
@@ -20,7 +20,7 @@ const UserPanel: React.FC = () => {
     const handleLogout = useLogoutUser();
     if (!user) return (
         <div className='flex items-center'>
-            <span onClick={handleNavigateToLogin} className='cursor-pointer text-blue-600'>Login {"->"}</span>
+            <span onClick={handleNavigateToLogin} className='cursor-pointer text-blue-600'>Login <FontAwesomeIcon icon={faArrowRight}/></span>
         </div>
     )
 

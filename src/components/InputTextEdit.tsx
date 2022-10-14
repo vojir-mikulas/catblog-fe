@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 
 interface props{
     config:{
+        name?:string,
         value:string,
         setValue: any,
     }
@@ -19,7 +20,7 @@ const InputTextEdit : React.FC<props> = ({config}) => {
     </>)
     return (
         <>
-            <input onBlur={handleEdit} autoFocus type="text" onChange={handleValueChange} value={config.value}/>
+            <input name={config.name} onBlur={handleEdit} autoFocus type="text" onChange={handleValueChange} value={config.value}/>
         </>
     );
 };

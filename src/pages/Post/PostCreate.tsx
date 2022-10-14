@@ -8,6 +8,7 @@ import {toast} from "react-toastify";
 import PostEditor from "../../components/PostEditor";
 import {errorCheck} from "../../helpers/ErrorCheck";
 import PostForm from "../../components/posts/PostForm";
+import { motion } from 'framer-motion';
 
 
 
@@ -15,9 +16,15 @@ const PostCreate = () => {
     useProtectedRoute();
 
     return (
-        <div>
-            <PostForm method={'create'} />
-        </div>
+        <motion.div   initial={{opacity:0}}
+                      animate={{opacity:1}}
+                      exit={{opacity:0}}>
+
+            <PostForm config={{
+                heading: 'Create new article',
+                method: 'create'
+            }}/>
+        </motion.div>
     );
 };
 

@@ -79,7 +79,7 @@ export const Axios = async (params: AxiosRequestConfig, cb?: (value: void) => vo
     return {response, error}
 }
 
-const UseAxios = (params: AxiosRequestConfig) => {
+const UseAxios = (params: AxiosRequestConfig,deps?: Array<any>) => {
     const [response, setResponse] = useState<AxiosResponse | null>(null)
     const [error, setError] = useState<AxiosError | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
@@ -106,7 +106,7 @@ const UseAxios = (params: AxiosRequestConfig) => {
     useEffect(() => {
         fetch();
 
-    }, []);
+    }, [deps]);
     return {response, error, loading};
 };
 

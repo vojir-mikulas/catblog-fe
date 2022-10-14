@@ -7,6 +7,7 @@ import {toast} from "react-toastify";
 import PostEditor from "../../components/PostEditor";
 import {errorCheck} from "../../helpers/ErrorCheck";
 import PostForm from "../../components/posts/PostForm";
+import { motion } from 'framer-motion';
 
 
 const PostEdit = () => {
@@ -21,10 +22,15 @@ const PostEdit = () => {
     if(postError) navigate('/user/posts')
     if(postLoading) return <div></div>
     return (
-        <div>
-            <h1>Edit post</h1>
-            <PostForm method={'edit'} post={post}/>
-        </div>
+        <motion.div   initial={{opacity:0}}
+                      animate={{opacity:1}}
+                      exit={{opacity:0}}>
+            <PostForm config={{
+                method: 'edit',
+                heading: 'Edit post',
+                post: post,
+            }}/>
+        </motion.div>
     );
 };
 

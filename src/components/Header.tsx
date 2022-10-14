@@ -9,13 +9,13 @@ const Header = () => {
 
     return (
         <>
-            <header className='bg-gray-50 fixed w-full'>
+            <header className='bg-gray-50 fixed w-full z-10'>
                 <div className='lg:container mx-auto h-14  flex justify-between '>
                     <nav className='flex-auto flex items-center gap-3'>
                         <img src={logo} alt="logo" className='w-11 h-12 cursor-pointer' onClick={()=>(navigate('/'))}/>
 
                         <Link to={'/'} className='text-gray-500 hover:text-black transition-colors'>Recent articles</Link>
-                        <Link to={'/user/profile'} className='text-gray-500 hover:text-black transition-colors'>About</Link>
+                        <a className='text-gray-500 hover:text-black transition-colors' target='_blank' href="https://applifting.cz/">About</a>
                     </nav>
 
                     <UserPanel/>

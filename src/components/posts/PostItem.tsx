@@ -15,19 +15,23 @@ const PostItem : React.FC<props> = ({config}) => {
     const navigate = useNavigate()
 
     return (
-        <div onClick={() =>(navigate(`posts/${config.id}`))}>
-            <img src={`${process.env.REACT_APP_BASEURL}${config.thumbnail}`} alt="thumbnail"/>
-            <article>
-                <h3>{config.title}</h3>
-                <div>
-                    <span>{config.author && `${config.author.name} ${config.author.surname}`}</span>
-                    <span>{config.createdAt && `${DateTime.fromISO(config.createdAt).toLocaleString(DateTime.DATETIME_SHORT)}`}</span>
-                </div>
-                <p> {stripHtml(config.content)}</p>
-                <div>
-                    <span>Read whole article</span>
-                    <span>Comments {config._count && config._count.comments}</span>
-                </div>
+        <div className='flex h-full' >
+            <div className=' object-cover w-72 h-64'>
+                <img src={`${process.env.REACT_APP_BASEURL}${config.thumbnail}`} className=' object-cover w-full h-full' alt="thumbnail"/>
+            </div>
+            <article className='w-2/3  ml-5 flex flex-col  '>
+               <div>
+                   <h3 className='text-2xl font-medium  '>{config.title}</h3>
+                   <div className='flex gap-3 text-gray-500 text-sm my-3'>
+                       <span>{config.author && `${config.author.name} ${config.author.surname}`}</span> <span>●</span>
+                       <span>{config.createdAt && `${DateTime.fromISO(config.createdAt).toLocaleString(DateTime.DATETIME_SHORT)}`}</span>
+                   </div>
+                   <p> {stripHtml(config.content).substring(0,500)}...</p>
+               </div>
+                <footer className='text-sm flex gap-4 mt-5  '>
+                    <span className='text-blue-500 cursor-pointer' onClick={() =>(navigate(`posts/${config.id}`))}>Read whole article</span>
+                    <span className='text-gray-500'>Comments {config._count && config._count.comments}</span>
+                </footer>
             </article>
         </div>
     );
