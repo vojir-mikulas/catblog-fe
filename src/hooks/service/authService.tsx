@@ -40,8 +40,8 @@ export const useLogoutUser = (): () => void => {
     const cookie = new Cookies;
     const navigate = useNavigate();
     return () => {
-        cookie.remove('access_token');
-        cookie.remove('refresh_token');
+        cookie.remove('access_token',{path:'/'});
+        cookie.remove('refresh_token',{path:'/'});
         dispatch(logoutUser({}))
         navigate('/', {replace: true})
     }

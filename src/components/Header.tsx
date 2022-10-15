@@ -13,7 +13,7 @@ const Header = () => {
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     return (
         <>
-            <header className='bg-gray-50 fixed w-full z-10'>
+            <header className='bg-gray-50 dark:black fixed w-full z-10'>
                 <div className='lg:container mx-auto h-14  flex justify-between  items-center  mobile:px-5'>
                     <nav className='flex-auto flex items-center gap-3  mobile:flex-grow-0'>
                         <img src={logo} alt="logo" className='w-11 h-12 cursor-pointer'

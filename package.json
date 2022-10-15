@@ -28,6 +28,7 @@
     "react-router-dom": "^6.4.1",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.0.8",
+    "redux-persist": "^6.0.0",
     "socket.io-client": "^4.5.2",
     "thunk": "^0.0.1",
     "typescript": "^4.8.4",
