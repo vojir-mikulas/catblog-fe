@@ -1,15 +1,15 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {DateTime} from "luxon";
-import avatar from "../../../img/avatar.jpg";
-import CommentList from "../../../components/comments/CommentList";
-import {CommentContext} from "../PostDetail";
-import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {userState} from "../../../redux/store";
 import {io, Socket} from "socket.io-client";
-import Comment from "../../../interfaces/Comment";
+import React, {useEffect, useMemo, useState} from "react";
+import {DateTime} from "luxon";
 import useAxios from "../../../hooks/useAxios";
+import {userState} from "../../../redux/store";
 import Cookies from "universal-cookie";
+import CommentList from "../../../components/comments/CommentList";
+import {useParams} from "react-router-dom";
+import avatar from '../../../img/avatar.jpg'
+
+export const CommentContext = React.createContext({});
 
 const Post = () => {
     const {id} = useParams();

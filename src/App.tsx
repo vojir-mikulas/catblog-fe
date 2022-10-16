@@ -5,7 +5,6 @@ import Home from "./pages/Home";
 
 
 import UserProfile from "./pages/User/UserProfile";
-import {useGetUser} from "./hooks/service/authService";
 import {ToastContainer} from "react-toastify";
 import PostDetail from "./pages/Post/PostDetail";
 import PostCreate from "./pages/Post/PostCreate";
@@ -14,6 +13,7 @@ import PostEdit from "./pages/Post/PostEdit";
 import Auth from "./pages/Auth";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
+import {useGetUser} from "./hooks/service/authService";
 
 
 function App() {

@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {CommentContext} from "../../pages/Post/PostDetail";
+
 import {useSelector} from "react-redux";
 import {userState} from "../../redux/store";
 import {DateTime} from 'luxon';
@@ -7,6 +7,7 @@ import avatar from '../../img/avatar.jpg'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faArrowUp, faArrowDown} from '@fortawesome/free-solid-svg-icons'
 import ReplyCommentList from "./ReplyCommentList";
+import {CommentContext} from "../../pages/Post/components/Post";
 
 enum Values {
     UPVOTE = 1,
