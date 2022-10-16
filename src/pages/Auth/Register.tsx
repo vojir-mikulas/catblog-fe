@@ -96,7 +96,8 @@ const Register = () => {
                     value: password,
                     setError: setPasswordError,
                     error: passwordError,
-                    errorMessage: 'Password is invalid'
+                    errorMessage: 'Password is invalid',
+                    type: 'password',
                 }}/>
                 <InputText config={{
                     name: 'Password again',
@@ -106,7 +107,8 @@ const Register = () => {
                     value: passwordCheck,
                     setError: setPasswordCheckError,
                     error: passwordCheckError,
-                    errorMessage: 'Password is invalid'
+                    errorMessage: 'Password is invalid',
+                    type: 'password',
                 }}/>
                 <span onClick={handleNavigateToLogin} className='text-blue-500 cursor-pointer my-3 self-center'>Already have an account?</span>
                 <Button config={{
@@ -114,7 +116,8 @@ const Register = () => {
                         if(errorCheck([nameError,surnameError,emailError,passwordError,passwordCheckError,isPasswordEqual])) return
                         await handleRegister()
                     },
-                    title: 'Register'
+                    title: 'Register',
+                    id: 'RegisterButton'
                 }}></Button>
             </form>
         </motion.div>

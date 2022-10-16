@@ -59,9 +59,9 @@ const Login = () => {
                     setError: setPasswordError,
                     error: passwordError,
                     type: 'password',
-                    errorMessage: 'Password is invalid'
+                    errorMessage: 'Password is invalid',
                 }}/>
-                <span onClick={handleNavigateToRegister} className='text-blue-500 cursor-pointer my-3 self-center'>Don't have an account yet?</span>
+                <span id='Register' onClick={handleNavigateToRegister} className='text-blue-500 cursor-pointer my-3 self-center'>Don't have an account yet?</span>
 
 
                 <Button config={{
@@ -71,7 +71,8 @@ const Login = () => {
                         await handleLogin()
 
                     },
-                    title: 'Log In'
+                    title: 'Log In',
+                    id: 'LoginButton'
                 }}/>
 
             </form>
