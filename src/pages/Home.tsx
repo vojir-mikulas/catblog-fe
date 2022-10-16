@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import useAxios from "../hooks/useAxios";
 import PostItem from "../components/posts/PostItem";
 import Post from "../interfaces/Post";

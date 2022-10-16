@@ -9,7 +9,7 @@ import {toast} from "react-toastify";
 import {motion} from 'framer-motion';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSort, faPen, faTrash} from '@fortawesome/free-solid-svg-icons'
-import Button from "../../components/Button";
+import Button from "../../components/forms/Button";
 
 const UserPosts = () => {
     useProtectedRoute();
@@ -25,7 +25,7 @@ const UserPosts = () => {
     }, [response])
 
     const handlePostDelete = async (id: string) => {
-        const {response, error} = await Axios({
+        const {error} = await Axios({
             method: 'DELETE',
             url: `/posts/${id}`
         }, () => {

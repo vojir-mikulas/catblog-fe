@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, { useState} from 'react';
 import logo from '../img/logo.png'
 import {Link, useNavigate} from "react-router-dom";
 import UserPanel from "./UserPanel";

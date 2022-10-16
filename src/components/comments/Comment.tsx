@@ -34,9 +34,9 @@ const Comment = ({id, content, createdAt, user, upvotes, parentId}: any) => {
             value
         })
     }
-
     return (
         <>
+            {/*Current comment*/}
             <div className='relative'>
                 {parentId && <div
                     className='mobile:hidden border-l-2 border-b-2  h-10 w-6 border-gray-300 rounded-bl-xl absolute -left-8 top-1'></div>}
@@ -88,11 +88,13 @@ const Comment = ({id, content, createdAt, user, upvotes, parentId}: any) => {
 
                 </div>
             </div>
+            {/*Nested comments*/}
             <div className='pl-16 flex flex-col relative mobile:pl-3'>
                 <div
                     className={`border-l-2 border-gray-300  absolute h-[calc(100%_-_4.3rem)] left-8 mobile:hidden`}></div>
                 <ReplyCommentList comments={getComments(id)}/>
             </div>
+            {/*Reply form*/}
             {openedReply && <div className='flex items-center w-full my-6'>
                 <div className='mr-6 rounded-full overflow-hidden w-16 h-16 flex-shrink-0 mobile:w-10 mobile:h-10'>
                     <img

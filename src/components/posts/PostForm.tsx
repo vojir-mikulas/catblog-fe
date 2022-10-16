@@ -1,12 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import InputText from "../forms/InputText";
-import PostEditor from "../PostEditor";
+import PostEditor from "../forms/PostEditor";
 import {InputError} from "../../interfaces/InputError";
 import {toast} from "react-toastify";
 import {Axios} from "../../hooks/useAxios";
 import {errorCheck} from "../../helpers/ErrorCheck";
 import {useNavigate, useParams} from "react-router-dom";
-import Button from "../Button";
+import Button from "../forms/Button";
 
 interface props {
     config: {

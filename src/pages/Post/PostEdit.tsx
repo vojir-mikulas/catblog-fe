@@ -1,11 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 import {useNavigate, useParams} from "react-router-dom";
-import InputText from "../../components/forms/InputText";
-import {InputError} from "../../interfaces/InputError";
-import useAxios, {Axios} from "../../hooks/useAxios";
-import {toast} from "react-toastify";
-import PostEditor from "../../components/PostEditor";
-import {errorCheck} from "../../helpers/ErrorCheck";
+import useAxios from "../../hooks/useAxios";
 import PostForm from "../../components/posts/PostForm";
 import { motion } from 'framer-motion';
 

@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {errorCheck} from "../../helpers/ErrorCheck";
 import {useSelector} from "react-redux";
 import {userState} from "../../redux/store";
-import Button from "../../components/Button";
+import Button from "../../components/forms/Button";
 import { motion } from 'framer-motion';
 
 const Login = () => {

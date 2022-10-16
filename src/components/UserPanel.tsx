@@ -3,11 +3,10 @@ import { useSelector} from "react-redux";
 import {userState} from "../redux/store";
 import {Link, useNavigate} from "react-router-dom";
 import {useLogoutUser} from "../hooks/service/authService";
-import React, {useState} from "react";
+import React from "react";
 import avatar from "../img/avatar.jpg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import useClickOutside from "../hooks/useClickOutside";
 
 
 const UserPanel: React.FC<any> = ({isVisible,setVisible}) => {
@@ -30,7 +29,7 @@ const UserPanel: React.FC<any> = ({isVisible,setVisible}) => {
         <>
             <div  className={`flex items-center gap-3 mobile:flex mobile:pt-10 mobile:z-30 mobile:text-2xl mobile:flex-col  mobile:fixed mobile:bg-white mobile:h-full mobile:w-4/6 mobile:top-0 mobile:left-0 ${isVisible ? 'mobile:block' : 'mobile:hidden'}`}>
 
-                <div onClick={handleCloseMenu}><Link to={'/'} className='hover:text-blue-600 transition-colorshidden mobile:block'>Recent
+                <div onClick={handleCloseMenu}><Link to={'/'} className='hover:text-blue-600 transition-colors hidden mobile:block'>Recent
                     articles</Link></div>
                 <div onClick={handleCloseMenu}><a className='hover:text-blue-600 transition-colors hidden mobile:block' target='_blank'
                         href="https://applifting.cz/">About</a></div>

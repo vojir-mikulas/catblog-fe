@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react';
 import useAxios, {Axios} from "../../hooks/useAxios";
 import avatar from '../../img/avatar.jpg'
 import useProtectedRoute from "../../hooks/useProtectedRoute";
-import InputTextEdit from "../../components/InputTextEdit";
+import InputTextEdit from "../../components/forms/InputTextEdit";
 import {toast} from "react-toastify";
 import {motion} from 'framer-motion';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPen, faXmark} from '@fortawesome/free-solid-svg-icons'
-import Button from "../../components/Button";
+import Button from "../../components/forms/Button";
 
 const UserProfile = () => {
     useProtectedRoute();
@@ -17,7 +17,7 @@ const UserProfile = () => {
     const [filePreview, setFilePreview] = useState<any>();
     const [selectedFile, setSelectedFile] = useState<any>();
 
-    const {response: userResponse, error, loading} = useAxios({
+    const {response: userResponse, loading} = useAxios({
         method: 'get',
         url: '/users/me',
 
@@ -42,7 +42,7 @@ const UserProfile = () => {
 
     }
     const handleSubmit = async () => {
-        const {response: userUpdateResponse, error} = await Axios({
+        const {error} = await Axios({
             method: 'put',
             url: '/users',
             data: {
@@ -51,7 +51,7 @@ const UserProfile = () => {
             }
         })
         if (selectedFile) {
-            const {response, error} = await Axios({
+            const {error} = await Axios({
                 method: 'post',
                 url: '/users/avatar',
                 headers: {

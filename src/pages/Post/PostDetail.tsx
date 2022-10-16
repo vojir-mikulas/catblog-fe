@@ -48,9 +48,10 @@ const PostDetail = () => {
     //Socket init
     useEffect(() => {
         const wsUrl: string = process.env.REACT_APP_COMMENT_WS_URL ? process.env.REACT_APP_COMMENT_WS_URL : 'http://localhost:3002';
-        const cookie = new Cookies;
+        const cookie = new Cookies();
         const access_token = cookie.get('access_token')
-        const newSocket = io(wsUrl, {
+        // @ts-ignore
+        const newSocket = io(process.env.REACT_APP_COMMENT_WS_URL, {
             extraHeaders: {
                 Authorization: `Bearer ${access_token}`
             }
@@ -68,10 +69,8 @@ const PostDetail = () => {
     //Turn on websocket stream
     useEffect(() => {
         socket?.on('comment', commentListener)
-        return () => {
-            socket?.off('comment', commentListener)
-        }
-    }, [commentListener])
+
+    }, [])
 
     useEffect(() => {
         setComments(post?.data.comments)
