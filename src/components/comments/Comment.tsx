@@ -16,7 +16,7 @@ enum Values {
 
 const Comment = ({id, content, createdAt, user, upvotes, parentId}: any) => {
     const {getComments, handleSocketComment, postId}: any = useContext(CommentContext)
-    const {user: currentUser} = useSelector(userState)
+    const {user: currentUser} : any = useSelector(userState)
 
     const [openedReply, setOpenedReply] = useState<boolean>(false);
     const [replyContent, setReplyContent] = useState<string>()
@@ -99,7 +99,7 @@ const Comment = ({id, content, createdAt, user, upvotes, parentId}: any) => {
             {openedReply && <div className='flex items-center w-full my-6'>
                 <div className='mr-6 rounded-full overflow-hidden w-16 h-16 flex-shrink-0 mobile:w-10 mobile:h-10'>
                     <img
-                        src={user?.avatar ? (process.env.REACT_APP_BASEURL + user.avatar) : avatar}
+                        src={currentUser?.avatar ? (process.env.REACT_APP_BASEURL + currentUser.avatar) : avatar}
                         alt="avatar" className='w-full h-full object-cover '/>
                 </div>
 
