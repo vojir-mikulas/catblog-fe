@@ -19,7 +19,7 @@ const Home = () => {
                     exit={{opacity:0}}>
             <h1 className='font-medium text-4xl my-4'>Recent articles</h1>
            <div className='flex flex-col gap-4' id='Posts'>
-               {posts && posts.data.map((post: Post)=>{
+               {posts && Array.isArray(posts.data) && posts.data.map((post: Post)=>{
                    return(
                        <PostItem key={post.id} config={{
                            ...post
