@@ -60,7 +60,7 @@ export const useLoginUser = (login: UserLogin) => {
             }
         })
 
-        if (!tokens) return toast.error('Login credentials invalid! 😥')
+        if (!tokens) return
 
         if(cookie.get('access_token') && cookie.get('refresh_token')) {
             cookie.remove('access_token')

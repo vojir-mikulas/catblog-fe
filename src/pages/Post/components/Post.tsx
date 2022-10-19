@@ -41,7 +41,7 @@ const Post = () => {
 
     //Socket init
     useEffect(() => {
-        const wsUrl: string = process.env.REACT_APP_COMMENT_WS_URL ? process.env.REACT_APP_COMMENT_WS_URL : 'http://localhost:3002';
+
         const cookie = new Cookies();
         const access_token = cookie.get('access_token')
         // @ts-ignore
@@ -63,12 +63,15 @@ const Post = () => {
     //Turn on websocket stream
     useEffect(() => {
         socket?.on('comment', commentListener)
-
+        return(()=>{
+            socket?.off('comment', commentListener)
+        })
     }, [])
 
     useEffect(() => {
         setComments(post?.data.comments)
     }, [post?.data.comments])
+
     if (postLoading) return <div></div>
     return (
         <main className='w-4/6 mobile:w-full '>
@@ -87,7 +90,7 @@ const Post = () => {
                 </article>
             </section>
             <hr className='my-6 '/>
-            <section className='pb-20 mobile:px-3'>
+            <section className='pb-20 mobile:px-3 overflow-hidden'>
                 <h4 className='text-2xl font-medium'>Comments ({comments ? comments.length : 0})</h4>
                 <article className=' mobile:text-xs'>
                     {user && <div className='flex items-center w-full my-6'>

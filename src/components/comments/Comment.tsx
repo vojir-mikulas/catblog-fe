@@ -48,7 +48,7 @@ const Comment = ({id, content, createdAt, user, upvotes, parentId}: any) => {
                             className='mr-6 rounded-full overflow-hidden w-16 h-16 mobile:h-11 mobile:w-11  flex-shrink-0 '>
                             <img
                                 src={user?.avatar ? (process.env.REACT_APP_BASEURL + user.avatar) : avatar}
-                                alt="avatar" className='w-20 h-20 object-cover rounded-full'/>
+                                alt="avatar" className='w-full h-full object-cover rounded-full'/>
                         </div>
                         <div className='flex flex-col'>
                             <div>
@@ -103,7 +103,7 @@ const Comment = ({id, content, createdAt, user, upvotes, parentId}: any) => {
                         alt="avatar" className='w-full h-full object-cover '/>
                 </div>
 
-                <textarea placeholder='Reply' value={replyContent} onChange={(e: any) => {
+                <textarea placeholder='Reply' autoFocus={true} value={replyContent} onChange={(e: any) => {
                     setReplyContent(e.currentTarget.value)
                 }} className='w-full border border-gray-300 rounded h-14 p-2 text-lg'
                           onKeyDown={(e) => {

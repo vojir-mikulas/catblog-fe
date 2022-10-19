@@ -16,7 +16,7 @@ const InputTextEdit : React.FC<props> = ({config}) => {
         config.setValue(e.currentTarget.value)
     }
     if(!edit) return (<>
-    <span onClick={handleEdit}> {config.value} </span>
+    <span onClick={handleEdit} className='cursor-text'> {config.value} </span>
     </>)
     return (
         <>

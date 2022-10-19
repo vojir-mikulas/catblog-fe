@@ -20,7 +20,13 @@ const RelatedPosts = () => {
                         if(relatedPosts?.data.id === id) return;
                         return (
                             <div className='my-1 cursor-pointer'
-                                 onClick={() => (navigate(`/posts/${post.id}`, {replace: true}))}>
+                                 onClick={() => {
+                                     navigate(`/empty`);
+                                     setTimeout(()=>{
+                                         navigate(`/posts/${post.id}`)
+                                     },200)
+
+                                 }}>
                                 <h4 className='font-medium '>{post.title}</h4>
                                 <p className='text-sm'>{stripHtmlMarkdown(post.content.substring(0, 40))}</p>
                             </div>

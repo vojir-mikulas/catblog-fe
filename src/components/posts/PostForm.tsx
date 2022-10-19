@@ -142,7 +142,7 @@ const PostForm: React.FC<props> = ({config}) => {
 
 
     return (
-        <div className='md:container mx-auto'>
+        <div className='md:container mx-auto mb-20'>
             <div className='w-4/6 mobile:w-full'>
                 <div className='flex gap-6 mt-10 mb-5 flex items-center mobile:flex-col mobile:items-center '>
                     <h1 className='text-4xl font-medium'>{heading}</h1>
